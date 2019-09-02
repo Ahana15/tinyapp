@@ -5,7 +5,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 const generateRandomString = () => {
-  let randomString = Math.random().toString(36).replace('0.', '').substring(0, 6);
+  let randomString = '';
+  let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  for (let i = 0; i < 6; i++) {
+    randomString += characters.charAt(Math.floor(Math.random() * characters.length));
+
+  }
 
   return randomString;
 
@@ -49,6 +55,13 @@ app.get("/urls/:shortURL", (req, res) => {
 });
 
 app.post("/urls", (req, res) => {
-  console.log(req.body);  // Log the POST request body to the console
-  res.send("Ok");         // Respond with 'Ok' (we will replace this)
+  urlDatabase[generateRandomString()] = req.body.longURL;
+  let generatedShortURL = Object.keys(urlDatabase).find(key => urlDatabase[key] === req.body.longURL);
+  res.redirect(`/urls/${generatedShortURL}`);
+});
+
+app.get("/u/:shortURL", (req, res) => {
+
+  const longURL = urlDatabase[req.params.shortURL];
+  res.redirect(longURL);
 });
