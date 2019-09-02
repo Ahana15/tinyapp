@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Ahana15/tinyapp/issues"
   },
-  "homepage": "https://github.com/Ahana15/tinyapp#readme"
+  "homepage": "https://github.com/Ahana15/tinyapp#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
