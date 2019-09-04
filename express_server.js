@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const bcrypt = require('bcrypt');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
@@ -141,10 +142,14 @@ app.post("/register", express.urlencoded({ extended: false }), (req, res) => {
     res.statusCode = 403;
     res.send(`Error ${res.statusCode}: Email address already eexists`);
   }
+
+  const password = req.body.password;
+  const hashedPassword = bcrypt.hashSync(password, 10);
+
   users[userID] = {
     id: userID,
     email: req.body.email,
-    password: req.body.password
+    password: hashedPassword
   };
   res.cookie('user_id', users[userID].id);
   res.redirect("/urls");
@@ -156,9 +161,10 @@ app.post("/login", express.urlencoded({ extended: false }), (req, res) => {
     res.statusCode = 403;
     res.send(`Error ${res.statusCode}: Email cannot be found`);
   }
+  // bcrypt.compareSync(req.body.password, users[key].password);
 
   for (let key in users) {
-    if (req.body.email === users[key].email && req.body.password === users[key].password) {
+    if (req.body.email === users[key].email && bcrypt.compareSync(req.body.password, users[key].password)) {
       res.cookie('user_id', users[key].id);
       res.redirect("/urls");
     } else if (req.body.email === users[key].email && req.body.password !== users[key].password) {
