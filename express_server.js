@@ -88,8 +88,14 @@ app.get("/u/:shortURL", (req, res) => {
 
 app.post("/urls/:shortURL/delete", (req, res) => {
   const shortURL = req.params.shortURL;
-  delete urlDatabase[shortURL];
-  res.redirect("/urls");
+  if (req.cookies["user_id"] === urlDatabase[shortURL].userID) {
+    const shortURL = req.params.shortURL;
+    delete urlDatabase[shortURL];
+    res.redirect("/urls");
+  } else {
+    res.statusCode = 403;
+    res.send(`Error ${res.statusCode} Connot delete someone else's tiny URL`);
+  }
 });
 
 app.post("/urls/:shortURL", express.urlencoded({ extended: false }), (req, res) => {
@@ -166,7 +172,7 @@ const urlsForUser = (id) => {
   let urlsForUserId = {};
   for (let shortURL in urlDatabase) {
     if (urlDatabase[shortURL].userID === id) {
-      urlsForUserId[shortURL] = urlDatabase[shortURL];
+      urlsForUserId[shortURL] = urlDatabase[shortURL].longURL;
     }
   }
   return urlsForUserId;
