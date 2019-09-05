@@ -11,14 +11,6 @@ TinyApp is a full stack web application built with Node and Express that allows 
 ### A list of the user's URLS
 !["User's URLS"](https://github.com/Ahana15/tinyapp/blob/master/docs/User%20URLS.png?raw=true)
 
-
-### User Login Page
-!["Login Page"](https://github.com/Ahana15/tinyapp/blob/master/docs/login.png?raw=true)
-
-
-### User Registration Page
-!["Login Page"](https://github.com/Ahana15/tinyapp/blob/master/docs/register.png?raw=true)
-
 ## Dependencies
 
 - Node.js
