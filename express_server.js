@@ -12,7 +12,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieSession({
   name: 'session',
-  keys: ['user_id'],
+  keys: ['key1'],
   // Cookie Options
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
@@ -79,10 +79,12 @@ app.get("/", (req, res) => {
 });
 
 app.get("/urls/:shortURL", (req, res) => {
-
-  let templateVars = { user: users[req.session.user_id], shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL].longURL };
-  res.render("urls_show", templateVars);
-
+  if (req.session.user_id) {
+    let templateVars = { user: users[req.session.user_id], shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL].longURL };
+    res.render("urls_show", templateVars);
+  } else {
+    res.redirect('/login');
+  }
 });
 
 app.post("/urls", (req, res) => {
@@ -95,9 +97,11 @@ app.post("/urls", (req, res) => {
 });
 
 app.get("/u/:shortURL", (req, res) => {
-  if (req.session.user_id) {
+  if (urlDatabase[req.params.shortURL]) {
     const longURL = urlDatabase[req.params.shortURL].longURL;
     res.redirect(longURL);
+  } else {
+    res.send(`This tiny url does not exists.`);
   }
 });
 
