@@ -12,21 +12,18 @@
       </div>
     </div>
 
-    <% if(user){ %>
+    <% if(user && user.email){ %>
     <h7>
       Logged in as : <%=user.email%>
     </h7>
     <form method="POST" action="/logout">
-
       <button type="submit" class="btn btn-outline-dark"> Logout</button>
     </form>
     <% } else { %>
     <form method="GET" action="/login">
-
       <button type="submit" class="btn btn-outline-light">Login</button>
     </form>
-    <form method="GET" action="/Register">
-
+    <form method="GET" action="/register">
       <button type="submit" class="btn btn-outline-light">Register</button>
     </form>
     <% } %>
