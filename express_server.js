@@ -1,5 +1,4 @@
 const { generateRandomString } = require('./helpers');
-const { getUserByEmail } = require('./helpers');
 const { checkEmailExists } = require('./helpers');
 const { urlsForUser } = require('./helpers');
 
