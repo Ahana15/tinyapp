@@ -5,7 +5,7 @@ TinyApp is a full stack web application built with Node and Express that allows 
 ## Final Product
 ### Application in Action
 
-![Application in action](https://github.com/Ahana15/tinyapp/blob/master/docs/usertestvideo.gif?raw=true)
+![Application in action](https://github.com/Ahana15/tinyapp/blob/master/docs/usertest.gif?raw=true)
 
 
 ### A list of the user's URLS
